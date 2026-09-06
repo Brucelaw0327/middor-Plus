@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Middor</string>
+    <string name="toast_error">错误:%1$s</string>
+    <string name="screen_back">返回</string>
+    <string name="help_icon_content_description">帮助</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_confirm">保存</string>
+
+    <string name="button_start_mirror_display">启动镜像悬浮层</string>
+    <plurals name="button_starting_in_seconds">
+        <item quantity="other">%d 秒后启动…</item>
+    </plurals>
+    <string name="button_starting_now">正在启动…</string>
+
+    <string name="settings_overlay_permission_error">错误:请在设置中授予 %1$s 悬浮窗权限。</string>
+</resources>

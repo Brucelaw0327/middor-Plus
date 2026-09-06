@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="landing_settings_content_description">设置</string>
+    <string name="landing_info_content_description">关于</string>
+    <string name="landing_app_icon_content_description">应用图标</string>
+    <string name="landing_android14_qpr2_note">您的设备正在运行 Android 14。应用屏幕共享功能至少需要 Android 14 QPR2,该更新可能尚未被您的设备厂商适配。如果在启动悬浮层时没有看到“单个应用”选项,则说明您的设备与本品不兼容。</string>
+</resources>

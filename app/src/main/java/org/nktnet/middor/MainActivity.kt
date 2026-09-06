@@ -2,6 +2,7 @@ package org.nktnet.middor
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.WindowInsets
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,11 +12,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +32,8 @@ import org.nktnet.middor.config.ThemeOption
 import org.nktnet.middor.config.UserSettings
 import org.nktnet.middor.managers.ScreenCaptureManager
 import org.nktnet.middor.services.MirrorService
+import org.nktnet.middor.services.QuickBubbleService
+import org.nktnet.middor.ui.components.PermissionOnboardingDialog
 import org.nktnet.middor.ui.screens.HelpScreen
 import org.nktnet.middor.ui.screens.InfoScreen
 import org.nktnet.middor.ui.screens.LandingScreen
@@ -41,7 +51,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        UserSettings.init(this)
+
+        var settingsLoaded by mutableStateOf(false)
+        UserSettings.init(this) { settingsLoaded = true }
 
         window.decorView.setOnApplyWindowInsetsListener { _, insets ->
             if (!isRequestingCapture) {
@@ -76,6 +88,10 @@ class MainActivity : ComponentActivity() {
             val isDarkTheme = resolveTheme(themeOption)
             val navController = rememberNavController()
 
+            var overlayGranted by remember {
+                mutableStateOf(Settings.canDrawOverlays(this@MainActivity))
+            }
+
             val insetsController = remember(window) {
                 window?.let { WindowInsetsControllerCompat(it, it.decorView) }
             }
@@ -83,6 +99,36 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(isDarkTheme) {
                 insetsController?.isAppearanceLightStatusBars = !isDarkTheme
                 insetsController?.isAppearanceLightNavigationBars = !isDarkTheme
+            }
+
+            DisposableEffect(Unit) {
+                val observer = object : DefaultLifecycleObserver {
+                    override fun onStart(owner: LifecycleOwner) {
+                        overlayGranted = Settings.canDrawOverlays(this@MainActivity)
+                    }
+                }
+                lifecycle.addObserver(observer)
+                onDispose { lifecycle.removeObserver(observer) }
+            }
+
+            LaunchedEffect(Unit) {
+                snapshotFlow { UserSettings.quickBubbleEnabled.value && overlayGranted }
+                    .collect { shouldRun ->
+                        val intent = Intent(
+                            this@MainActivity,
+                            QuickBubbleService::class.java
+                        )
+                        if (shouldRun) {
+                            if (!QuickBubbleService.isRunning) {
+                                ContextCompat.startForegroundService(
+                                    this@MainActivity,
+                                    intent
+                                )
+                            }
+                        } else {
+                            stopService(intent)
+                        }
+                    }
             }
 
             MiddorTheme(darkTheme = isDarkTheme) {
@@ -109,6 +155,14 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Help.route) {
                             HelpScreen(navController)
                         }
+                    }
+
+                    if (settingsLoaded && !UserSettings.permissionOnboardingCompleted.value) {
+                        PermissionOnboardingDialog(
+                            onDismiss = {
+                                UserSettings.setPermissionOnboardingCompleted(this@MainActivity)
+                            }
+                        )
                     }
                 }
             }

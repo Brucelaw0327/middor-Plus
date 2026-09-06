@@ -64,6 +64,7 @@ class MirrorService : Service() {
                     CustomNotificationManager.buildNotification(this),
                     ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
                 )
+                QuickBubbleService.notifyMirrorStarted()
 
                 val resultCode = intent.getIntExtra(
                     EXTRA_RESULT_CODE, Activity.RESULT_CANCELED
@@ -184,6 +185,7 @@ class MirrorService : Service() {
 
     override fun onDestroy() {
         removeOverlay()
+        QuickBubbleService.notifyMirrorStopped()
         super.onDestroy()
     }
 

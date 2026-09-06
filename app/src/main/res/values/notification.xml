@@ -3,4 +3,6 @@
     <string name="notification_content_title">Mirror Display Overlay</string>
     <string name="notification_content_text">Tap to return</string>
     <string name="notification_exit_action">Exit</string>
+    <string name="notification_bubble_title">Quick Mirror Bubble</string>
+    <string name="notification_bubble_text">Tap the bubble to mirror the current app</string>
 </resources>

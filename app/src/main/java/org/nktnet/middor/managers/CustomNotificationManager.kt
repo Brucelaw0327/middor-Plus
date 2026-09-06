@@ -14,6 +14,8 @@ import org.nktnet.middor.services.MirrorService
 object CustomNotificationManager {
     private const val CHANNEL_ID = "mirror"
     private const val CHANNEL_NAME = "Screen Mirroring"
+    private const val BUBBLE_CHANNEL_ID = "quick_bubble"
+    private const val BUBBLE_CHANNEL_NAME = "Quick Mirror Bubble"
 
     fun createNotificationChannel(context: Context) {
         val channel = NotificationChannel(
@@ -23,6 +25,39 @@ object CustomNotificationManager {
         )
         context.getSystemService(NotificationManager::class.java)
             ?.createNotificationChannel(channel)
+    }
+
+    fun createBubbleNotificationChannel(context: Context) {
+        val channel = NotificationChannel(
+            BUBBLE_CHANNEL_ID,
+            BUBBLE_CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_MIN
+        )
+        context.getSystemService(NotificationManager::class.java)
+            ?.createNotificationChannel(channel)
+    }
+
+    fun buildBubbleNotification(context: Context): Notification {
+        val appIntent = Intent(context, MainActivity::class.java)
+        val pendingApp = PendingIntent.getActivity(
+            context,
+            1,
+            appIntent,
+            PendingIntent.FLAG_MUTABLE
+        )
+
+        return NotificationCompat.Builder(context, BUBBLE_CHANNEL_ID)
+            .setSmallIcon(R.drawable.flip_24px)
+            .setContentTitle(
+                context.getString(R.string.notification_bubble_title)
+            )
+            .setContentText(
+                context.getString(R.string.notification_bubble_text)
+            )
+            .setContentIntent(pendingApp)
+            .setOngoing(true)
+            .setSilent(true)
+            .build()
     }
 
     fun buildNotification(context: Context): Notification {

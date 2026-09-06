@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">设置</string>
+    <string name="settings_app_info">应用信息</string>
+    <string name="settings_preferences_title">偏好设置</string>
+    <string name="settings_permissions_title">权限</string>
+    <string name="settings_theme_label">主题</string>
+    <string name="settings_start_on_launch_label">启动时自动开始</string>
+    <string name="settings_flip_horizontally_label">水平镜像</string>
+    <string name="settings_rotate_180_label">旋转 180°</string>
+    <string name="settings_remove_system_bars">移除系统栏</string>
+    <string name="settings_quick_bubble_label">快捷悬浮球</string>
+    <string name="settings_start_delay_seconds_label">启动延时(秒)</string>
+    <string name="settings_start_delay_seconds_value">%1$d</string>
+    <string name="settings_overlay_permission_label">悬浮窗</string>
+    <string name="settings_notifications_permission_label">通知</string>
+    <string name="settings_granted_text_button">已授权</string>
+    <string name="settings_request_text_button">去授权</string>
+    <string name="settings_app_info_error">错误:%1$s</string>
+    <string name="settings_reset_icon_description">重置设置</string>
+
+    <string name="settings_reset_dialog_title">重置偏好设置</string>
+    <string name="settings_reset_dialog_message">确定要将所有偏好设置恢复为默认值吗?</string>
+    <string name="settings_reset_dialog_confirm">重置</string>
+    <string name="settings_reset_dialog_cancel">取消</string>
+</resources>

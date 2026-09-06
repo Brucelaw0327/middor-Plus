@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_title">帮助</string>
+    <string name="instructions_title">使用说明</string>
+    <string name="notes_title">注意事项</string>
+
+    <string name="help_overlay_step">1. 打开系统设置,授予 %1$s 悬浮窗权限,用于在其他应用上方显示悬浮层。</string>
+    <string name="help_notification_step">2. (可选)授予 %1$s 通知权限。点按通知可关闭悬浮层并返回本应用。</string>
+    <string name="help_start_button_step">3. 在主界面点按“%1$s”按钮。</string>
+    <string name="help_single_app_step">4. 确保选择“单个应用”,然后点按开始。请避免选择“整个屏幕”,否则悬浮层本身也会被捕获。</string>
+    <string name="help_select_app_step">5. 选择要镜像的应用,随后会启动该应用、创建悬浮层并发送通知。</string>
+    <string name="help_exit_overlay_step">6. 如需退出,点按悬浮层右上角的红色关闭 (×) 图标;也可以下拉状态栏点按通知。</string>
+
+    <string name="help_overlay_note">1. 悬浮层启用期间无法操作被镜像的应用,建议先将其设置好(例如提前开始 Google Maps 导航),再创建镜像悬浮层。</string>
+    <string name="help_remove_system_bars">2. 使用“移除系统栏”设置时,会在创建悬浮层之前记录状态栏和导航栏的高度用于裁剪。如果之后设备方向发生变化(例如从竖屏转为横屏),裁剪尺寸不会随之更新。</string>
+</resources>

@@ -1,22 +1,31 @@
 Middor is a free and open-source Android application for mirroring apps on your device.
 
-With built-in support for horizontal flip and 180° rotation, Middor can be used to:
+With built-in support for horizontal flip and 180° rotation, it can be used to:
 
 - Display apps on a HUD
 - Project content onto a car windscreen (e.g. Google Maps navigation)
 - View mirrored images and videos
 
-Middor only supports devices running Android 14 QPR2 or higher, as it relies on the single app screen sharing feature.
+It only supports devices running Android 14 QPR2 or higher, as it relies on the single app screen sharing feature.
 
 For more details, see Android 14 - App Screen Sharing: https://developer.android.com/about/versions/14/features/app-screen-sharing
 
 For usage instructions, see https://github.com/nktnet1/middor/discussions/2
 
+<big>Plus features</big>
+
+This build is the middor-Plus fork, which adds on top of upstream Middor:
+
+- <b>Quick bubble</b>: a small draggable bubble that stays on screen, letting you start mirroring without opening the app first
+- <b>First-launch onboarding</b>: requests the overlay and notification permissions up front
+- <b>Simplified Chinese UI</b>: with per-app language switch support on Android 13 and above
+
 <big>Permissions</big>
 
-- <b>SYSTEM_ALERT_WINDOW</b>: to draw a mirror overlay on top of other apps
+- <b>SYSTEM_ALERT_WINDOW</b>: to draw both the mirror overlay and the quick bubble on top of other apps
 - <b>FOREGROUND_SERVICE</b>: to run the mirror service continuously while the overlay is active
 - <b>FOREGROUND_SERVICE_MEDIA_PROJECTION</b>: for capturing the screen content of the underlying app
+- <b>FOREGROUND_SERVICE_SPECIAL_USE</b>: to keep the quick bubble service running in the background
 - <b>POST_NOTIFICATIONS</b>: (optional) to display the mirror service notification with additional actions
 
 <big>Contact</big>

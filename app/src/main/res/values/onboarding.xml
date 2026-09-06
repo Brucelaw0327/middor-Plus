@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_onboarding_title">Permissions required</string>
+    <string name="permission_onboarding_message">Middor needs the following permissions to show the quick mirror bubble and let you exit the overlay from the notification.</string>
+    <string name="permission_onboarding_notifications">Notifications</string>
+    <string name="permission_onboarding_overlay">Overlay</string>
+    <string name="permission_onboarding_granted">Granted</string>
+    <string name="permission_onboarding_not_granted">Not granted</string>
+    <string name="permission_onboarding_grant">Grant</string>
+    <string name="permission_onboarding_skip">Skip</string>
+</resources>

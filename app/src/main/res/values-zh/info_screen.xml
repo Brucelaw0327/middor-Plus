@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="info_title">关于</string>
+    <string name="info_app_name">应用</string>
+    <string name="info_package_name">包名</string>
+    <string name="info_app_version">版本</string>
+    <string name="info_source_url">源代码地址</string>
+    <string name="info_android_version">安卓版本</string>
+</resources>

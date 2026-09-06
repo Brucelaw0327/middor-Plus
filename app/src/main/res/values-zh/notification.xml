@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_content_title">镜像悬浮层</string>
+    <string name="notification_content_text">点按返回应用</string>
+    <string name="notification_exit_action">退出</string>
+    <string name="notification_bubble_title">快捷镜像悬浮球</string>
+    <string name="notification_bubble_text">点按悬浮球即可镜像当前应用</string>
+</resources>

@@ -24,5 +24,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Middor"
+rootProject.name = "middor-Plus"
 include(":app")

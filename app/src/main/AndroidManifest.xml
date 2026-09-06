@@ -10,6 +10,7 @@
         tools:ignore="ForegroundServicesPolicy"
     />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +18,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Middor"
@@ -37,6 +39,26 @@
             android:name=".services.MirrorService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection"
+        />
+
+        <service
+            android:name=".services.QuickBubbleService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+        >
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Persistent draggable bubble that lets the user quickly start mirroring the current app"
+            />
+        </service>
+
+        <activity
+            android:name=".QuickMirrorActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.Middor.Translucent"
         />
     </application>
 </manifest>

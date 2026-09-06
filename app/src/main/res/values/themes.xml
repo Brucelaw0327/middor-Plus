@@ -3,4 +3,12 @@
     <style name="Theme.Middor" parent="android:Theme.Material.NoActionBar">
         <item name="android:forceDarkAllowed">false</item>
     </style>
+
+    <style name="Theme.Middor.Translucent" parent="Theme.Middor">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

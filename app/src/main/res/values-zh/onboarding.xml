@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_onboarding_title">需要授权</string>
+    <string name="permission_onboarding_message">Middor 需要以下权限,才能显示快捷镜像悬浮球,并让你通过通知退出悬浮层。</string>
+    <string name="permission_onboarding_notifications">通知</string>
+    <string name="permission_onboarding_overlay">悬浮窗</string>
+    <string name="permission_onboarding_granted">已授权</string>
+    <string name="permission_onboarding_not_granted">未授权</string>
+    <string name="permission_onboarding_grant">去授权</string>
+    <string name="permission_onboarding_skip">跳过</string>
+</resources>

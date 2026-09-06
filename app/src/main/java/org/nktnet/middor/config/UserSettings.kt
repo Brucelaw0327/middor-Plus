@@ -24,6 +24,9 @@ object UserSettings {
         val UPSIDE_DOWN_KEY = booleanPreferencesKey("user_settings.upside_down")
         val REMOVE_SYSTEM_BARS_KEY = booleanPreferencesKey("user_settings.remove_system_bars")
         val START_DELAY_SECONDS_KEY = intPreferencesKey("user_settings.start_delay_seconds")
+        val QUICK_BUBBLE_KEY = booleanPreferencesKey("user_settings.quick_bubble")
+        val PERMISSION_ONBOARDING_KEY =
+            booleanPreferencesKey("user_settings.permission_onboarding")
     }
 
     private object Defaults {
@@ -33,6 +36,8 @@ object UserSettings {
         const val ROTATE_180 = false
         const val REMOVE_SYSTEM_BARS = false
         const val START_DELAY_SECONDS = 0
+        const val QUICK_BUBBLE = true
+        const val PERMISSION_ONBOARDING = false
     }
 
     val currentTheme: MutableState<ThemeOption> = mutableStateOf(Defaults.THEME)
@@ -41,6 +46,9 @@ object UserSettings {
     val rotate180: MutableState<Boolean> = mutableStateOf(Defaults.ROTATE_180)
     val removeSystemBars: MutableState<Boolean> = mutableStateOf(Defaults.REMOVE_SYSTEM_BARS)
     val startDelaySeconds: MutableState<Int> = mutableIntStateOf(Defaults.START_DELAY_SECONDS)
+    val quickBubbleEnabled: MutableState<Boolean> = mutableStateOf(Defaults.QUICK_BUBBLE)
+    val permissionOnboardingCompleted: MutableState<Boolean> =
+        mutableStateOf(Defaults.PERMISSION_ONBOARDING)
 
     fun setTheme(context: Context, theme: ThemeOption) {
         currentTheme.value = theme
@@ -85,6 +93,17 @@ object UserSettings {
             delayMs
         )
 
+    fun setQuickBubbleEnabled(context: Context, value: Boolean) =
+        setPreference(context, Keys.QUICK_BUBBLE_KEY, quickBubbleEnabled, value)
+
+    fun setPermissionOnboardingCompleted(context: Context, value: Boolean = true) =
+        setPreference(
+            context,
+            Keys.PERMISSION_ONBOARDING_KEY,
+            permissionOnboardingCompleted,
+            value
+        )
+
     fun resetSettings(context: Context) {
         setTheme(context, Defaults.THEME)
         setStartOnLaunch(context, Defaults.START_ON_LAUNCH)
@@ -92,10 +111,12 @@ object UserSettings {
         setRotate180(context, Defaults.ROTATE_180)
         setRemoveSystemBars(context, Defaults.REMOVE_SYSTEM_BARS)
         setStartDelay(context, Defaults.START_DELAY_SECONDS)
+        setQuickBubbleEnabled(context, Defaults.QUICK_BUBBLE)
     }
 
-    fun init(context: Context) {
+    fun init(context: Context, onLoaded: (() -> Unit)? = null) {
         CoroutineScope(Dispatchers.IO).launch {
+            var hasLoaded = false
             context.dataStore.data.collectLatest { prefs ->
                 currentTheme.value = ThemeOption.entries.find {
                     it.name == prefs[Keys.THEME_KEY]
@@ -108,6 +129,14 @@ object UserSettings {
                     ?: Defaults.REMOVE_SYSTEM_BARS
                 startDelaySeconds.value = prefs[Keys.START_DELAY_SECONDS_KEY]
                     ?: Defaults.START_DELAY_SECONDS
+                quickBubbleEnabled.value = prefs[Keys.QUICK_BUBBLE_KEY] ?: Defaults.QUICK_BUBBLE
+                permissionOnboardingCompleted.value = prefs[Keys.PERMISSION_ONBOARDING_KEY]
+                    ?: Defaults.PERMISSION_ONBOARDING
+
+                if (!hasLoaded) {
+                    hasLoaded = true
+                    onLoaded?.invoke()
+                }
             }
         }
     }

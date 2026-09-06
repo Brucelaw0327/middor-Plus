@@ -46,6 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
@@ -53,6 +54,7 @@ import org.nktnet.middor.R
 import org.nktnet.middor.config.Screen
 import org.nktnet.middor.config.UserSettings
 import org.nktnet.middor.managers.ToastManager
+import org.nktnet.middor.services.QuickBubbleService
 import org.nktnet.middor.ui.ThemeDropdownIcon
 import org.nktnet.middor.ui.components.settings.BooleanSetting
 import org.nktnet.middor.ui.components.settings.IntSetting
@@ -295,6 +297,32 @@ fun SettingsScreen(navController: NavController) {
                 UserSettings.removeSystemBars.value
             ) { newValue ->
                 UserSettings.setRemoveSystemBars(context, newValue)
+            }
+            BooleanSetting(
+                stringResource(R.string.settings_quick_bubble_label),
+                UserSettings.quickBubbleEnabled.value
+            ) { newValue ->
+                if (newValue && !Settings.canDrawOverlays(context)) {
+                    ToastManager.show(
+                        context,
+                        resources.getString(
+                            R.string.settings_overlay_permission_error,
+                            resources.getString(R.string.app_name)
+                        )
+                    )
+                } else {
+                    UserSettings.setQuickBubbleEnabled(context, newValue)
+                    if (newValue) {
+                        ContextCompat.startForegroundService(
+                            context,
+                            Intent(context, QuickBubbleService::class.java)
+                        )
+                    } else {
+                        context.stopService(
+                            Intent(context, QuickBubbleService::class.java)
+                        )
+                    }
+                }
             }
             IntSetting(
                 label = stringResource(R.string.settings_start_delay_seconds_label),
